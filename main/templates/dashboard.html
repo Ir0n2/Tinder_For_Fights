@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+<center>
+<h2>Welcome, {{.LoggedInUser.Username}}!</h2>
+    <div id="userContainer">
+        {{range .Users}}
+        <div class="user-card">
+            <img src="/{{.Image}}" alt="Profile Picture" width="150">
+            <p>{{.Username}}</p>
+            <button class="like-btn" data-username="{{.Username}}">✅ Fight</button>
+            <button class="dislike-btn">❌ Next</button>
+        </div>
+        {{end}}
+    </div>
+    
+    <script>
+        let index = 0;
+        const users = document.querySelectorAll('.user-card');
+
+        function showUser() {
+            users.forEach((user, i) => user.style.display = i === index ? 'block' : 'none');
+        }
+
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', async function() {
+                const username = this.getAttribute('data-username');
+                await fetch(`/like?username=${username}`); // Send like request
+                index = (index + 1) % users.length;
+                showUser();
+            });
+        });
+
+        document.querySelectorAll('.dislike-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                index = (index + 1) % users.length;
+                showUser();
+            });
+        });
+
+        showUser();
+    </script>
+
+    <a href="/logout">Logout</a>
+</center>
+</body>
+</html>
+
