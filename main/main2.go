@@ -47,9 +47,9 @@ func sendEmail(fromUser User, toUser User) error {
 	smtpPort := "587"
 
 	// Email content
-	subject := "You Got a Like from " + fromUser.Username
+	subject := "user " + fromUser.Username + " wants to fight!"
 	body := fmt.Sprintf(
-		"Subject: %s\n\n%s liked you!\nEmail: %s\nMessage: Hello World!",
+		"Subject: %s\n\n%s wants to fight you!\nEmail: %s\nMessage: Email them back with a time and place to square the fuck up",
 		subject, fromUser.Username, fromUser.Email,
 	)
 
